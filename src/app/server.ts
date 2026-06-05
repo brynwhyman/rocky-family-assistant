@@ -245,12 +245,15 @@ export async function runBackgroundReply(
   processMessageImpl: (jid: string, text: string) => Promise<string>,
   sendReplyImpl: (jid: string, text: string) => Promise<void>
 ): Promise<void> {
+  let timeoutHandle: NodeJS.Timeout | null = null;
+
   try {
     const reply = await Promise.race([
       processMessageImpl(jid, text),
-      new Promise<string>((_, reject) =>
-        setTimeout(() => reject(new Error("Processing timeout")), 120_000)
-      ),
+      new Promise<string>((_, reject) => {
+        timeoutHandle = setTimeout(() => reject(new Error("Processing timeout")), 120_000);
+        timeoutHandle.unref?.();
+      }),
     ]);
     if (!reply.trim()) {
       appLogger.info("Background reply skipped", { jid, reason: "empty_reply" });
@@ -273,6 +276,10 @@ export async function runBackgroundReply(
         jid,
         err: String(sendErr),
       });
+    }
+  } finally {
+    if (timeoutHandle) {
+      clearTimeout(timeoutHandle);
     }
   }
 }

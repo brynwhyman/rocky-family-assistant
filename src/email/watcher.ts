@@ -70,6 +70,7 @@ export function startEmailWatcher(deps: WatcherDeps = {}): () => void {
   watcherTimer = setInterval(() => {
     void run();
   }, config.googleEmail.watcherIntervalMs);
+  watcherTimer.unref?.();
 
   void run();
 
