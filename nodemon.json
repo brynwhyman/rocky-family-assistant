@@ -1,0 +1,6 @@
+{
+  "watch": ["src", "prompts", ".env"],
+  "ext": "ts,json,md",
+  "ignore": ["state/**", "dist/**", "node_modules/**"],
+  "exec": "ts-node src/app/server.ts"
+}
