@@ -92,6 +92,8 @@ Rocky is built as a small, opinionated system rather than a general-purpose agen
 - [Operations](docs/operations.md)
 - [Email spec](docs/email-spec.md)
 - [OpenClaw integration notes](docs/integrations/openclaw.md)
+- [Contributing guide](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
 
 ## Tests
 
@@ -100,3 +102,7 @@ npm run test:unit
 npm run test:integration
 npm test
 ```
+
+## Contributing
+
+If you want to build on this, keep it practical. Small, readable changes beat clever ones. Issues and pull requests are welcome, especially around reliability, safety, and making the local-first workflow easier to understand.
